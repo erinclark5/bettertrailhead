@@ -31,22 +31,18 @@
     <?php
     // define variables and set to empty values
     $nameErr = "";
-    $fname = $lname = "";
+    $uname = $pass = "";
     echo "<script> var good=0;</script>";
     date_default_timezone_set("America/Denver");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (empty($_POST["fname"])||empty($_POST["lname"])) {
+      if (empty($_POST["uname"])||empty($_POST["pass"])) {
         $nameErr = "Both fields required";
 
       } else {
-        $fname = test_input($_POST["fname"]);
-        $lname = test_input($_POST["lname"]);
+        $uname = test_input($_POST["uname"]);
+        $pass = $_POST["pass"];
         echo "<script>good=good+1;</script>";
-        // check if name only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z ]*$/",$fname)||!preg_match("/^[a-zA-Z ]*$/",$lname)) {
-          $nameErr = "Only letters and white space allowed";
-        }
       }
     }
 
@@ -57,7 +53,6 @@
       return $data;
     }
     $time = date("m/d/Y h:i:sa");
-    $dest = "mysql_submit.php";
     ?>
     <script>
       function imgchange(){
@@ -65,7 +60,7 @@
         document.getElementById("prodpic").src = '../php/img/'.concat(x,'.jpg');
       }
       function isGood(){
-        if(good == 2)return true;
+        if(good == 1)return true;
       }
     </script>
       <div id="login">
@@ -73,10 +68,10 @@
         <p><span class="error">* required field</span></p>
         <form method="post" onsubmit=isGood() action="landing.php">
           <fieldset>
-            First Name: <input type="text" id="fname" name="fname" onkeyup="showHint(this.value,'f')" >
+            Username: <input type="text" id="uname" name="uname">
             <span class="error">* <?php echo $nameErr;?></span>
             <br><br>
-            Last Name: <input type="text" id="lname" name="lname" onkeyup="showHint(this.value,'l')">
+            Password: <input type="password" id="pass" name="pass">
             <span class="error">* <?php echo $nameErr;?></span>
           </fieldset>
           <br>
@@ -85,7 +80,8 @@
           <input type="reset" name="reset" value="Reset">
         </form>
       </div>
-
+      <p>Or...Register here:</p>
+      <button onclick="window.location.href = 'register.php';" style="margin-bottom:5px;">Register Now!</button>
   </article>
 
   </div>

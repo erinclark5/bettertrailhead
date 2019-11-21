@@ -1,6 +1,6 @@
 /* Root directory for variable creation! */
 :root{
-  --bg-color: silver;
+  --bg-color: #e3e1dc;
   --body-bg: url("./images/mines.png");
   --font-c: black;
 }
@@ -109,15 +109,15 @@ body{
   width: 95%;
   margin: auto;
   margin-top: 1%;
-  border: 1px solid white;
+  border: 1px solid black;
   border-radius:22px;
 }
 .title{
   text-transform: uppercase;
   font-family:"Lucida Console", monospace;
-  text-align: right;
   margin-right: 5%;
   margin: 20px;
+  text-align: center;
 }
 .intro{
   font-family: "Georgia", serif;
