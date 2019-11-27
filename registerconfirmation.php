@@ -26,50 +26,46 @@
   <article>
     <h2>You have been registered!</h2>
     <?php 
-  $filename = "sql/databaseCreation.sql";
   $servername = "localhost";
   $username = "root";
   $password = "";
-  $dbname = "f19_erinclark";
-
+  $dbname = "trailhead";
+  error_reporting(E_ALL);
   $conn = new mysqli($servername, $username, $password, $dbname);
   if($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
-  $file = file_get_contents("sql/databaseCreation.sql");
+  $file = file_get_contents("trailhead.sql");
   if(!mysqli_multi_query($conn, $file)){
     echo "Error: " . mysqli_error($conn);
   }
-  while(mysqli_next_result($conn));
-  $page_name = "orderform_submit";
-  $current_path = "../";
-  include '../templateHeader.php';?>
-  <?php 
-  date_default_timezone_set("America/Denver"); 
-  $time = date("m/d/y g:i:s A", $_POST["timestamp"]); ?>
-  <?php
-  $firstname = $_POST["firstname"];
-  $lastname = $_POST["lastname"];
+  while(mysqli_more_results($conn)){ mysqli_next_result($conn); }
+  echo $conn->error;
+  ini_set('display_errors', 1);
+  $firstname = $_POST["fname"];
+  $lastname = $_POST["lname"];
   $email = $_POST["email"];
   $id = $_POST["id"];
   $username = $_POST["uname"];
   $password = $_POST["pass"];
   $student = false;
-  if($_POST["status"] == "student"){
+  if($_POST["status"] == "Student"){
       $student = true;
   } 
   $sql = "INSERT INTO USERS (uname, pass, email, id) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
+  echo $conn->error;
   $stmt->bind_param("sssi", $username, $password, $email, $id);
   $stmt->execute();
 
   if($student == true){
-    $sql = "INSERT INTO STUDENTS (id, firstname, lastname) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO STUDENTS (studentid, firstname, lastname) VALUES (?, ?, ?)";
   } else {
-    $sql = "INSERT INTO ADMINISTRATION (id, firstname, lastname) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO ADMINISTRATION (adminid, firstname, lastname) VALUES (?, ?, ?)";
   }
   $stmt2 = $conn->prepare($sql);
-  $stmt2->bind_param("sssidd", $id, $firstname, $lastname);
+  echo $conn->error;
+  $stmt2->bind_param("iss", $id, $firstname, $lastname);
   $stmt2->execute(); 
   $conn->close();
   ?>

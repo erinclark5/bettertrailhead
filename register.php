@@ -28,89 +28,6 @@
 
   <div class="info">
   <article>
-    <?php
-    // define variables and set to empty values
-    $nameErr = $emailErr = $unameErr = $passErr = "";
-    $fname = $lname = $email = $uname = $pass = "";
-    echo "<script> var good=0;</script>";
-    date_default_timezone_set("America/Denver");
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (empty($_POST["fname"])||empty($_POST["lname"])) {
-        $nameErr = "Both fields required";
-
-      } else {
-        $fname = test_input($_POST["fname"]);
-        $lname = test_input($_POST["lname"]);
-        echo "<script>good=good+1;</script>";
-        // check if name only contains letters and whitespace
-        if (!preg_match("/^[a-zA-Z ]*$/",$fname)||!preg_match("/^[a-zA-Z ]*$/",$lname)) {
-          $nameErr = "Only letters and white space allowed";
-        }
-      }
-
-      if (empty($_POST["email"])) {
-          $emailErr = "Email is required";
-        } else {
-          $email = test_input($_POST["email"]);
-          echo "<script>good=good+1;</script>";
-          // check if e-mail address is well-formed
-          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $emailErr = "Invalid email format";
-          }
-        }
-
-      if (empty($_POST["uname"])) {
-          $emailErr = "Username is required";
-        } else {
-          $uname = test_input($_POST["uname"]);
-          echo "<script>good=good+1;</script>";
-          if (!preg_match("/^[a-zA-Z ]*$/",$uname)) {
-            $nameErr = "Only letters allowed";
-          }
-        }
-
-        if (empty($_POST["pass"])) {
-          $passErr = "password is required";
-        } else {
-          $pass = $_POST["pass"];
-          echo "<script>good=good+1;</script>";
-        }
-    }
-
-    function test_input($data) {
-      $data = trim($data);
-      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      return $data;
-    }
-    $time = date("m/d/Y h:i:sa");
-    ?>
-    <script>
-      function isGood(){
-        if(good !== 4)return false;
-        <?php
-          // $servername = "localhost";$username = "root";$password = "";$dbname="trailhead";
-          // $conn = new mysqli($servername, $username, $password,$dbname);
-          // // Check connection
-          // if ($conn->connect_error) {
-          //     die("Connection failed: <br>" . $conn->connect_error);
-          // }
-          // $sql = $conn->prepare("select uname from users where uname=(?)");
-          // $sql->bind_param("s",$_POST["uname"]);
-          // $sql->execute();
-          // $result=$sql->get_result();
-          //
-          // if ($result->num_rows>0) {
-          //   $unameErr = "Username already taken!";
-          //   echo "return false;";
-          // } else {
-          //   echo "return true;";
-          // }
-          // $conn->close();
-         ?>
-      }
-    </script>
       <div id="login">
         <h1>Welcome! Please register here:</h1>
         <p><span class="error">* required field</span></p>
@@ -130,10 +47,8 @@
           <br>
           <fieldset>
             Username: <input type="text" id="uname" name="uname">
-            <span class="error">* <?php echo $unameErr;?></span>
             <br><br>
             Password: <input type="text" id="pass" name="pass">
-            <span class="error">* <?php echo $passErr;?></span>
           </fieldset>
           <br>
           <input type="hidden" name="time" value="<?php echo $time;?>">
