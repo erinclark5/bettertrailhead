@@ -114,16 +114,18 @@
       <div id="login">
         <h1>Welcome! Please register here:</h1>
         <p><span class="error">* required field</span></p>
-        <form method="post" onsubmit=isGood() action="registerconfirmation.php">
+        <form method="post" onsubmit="return validate()" action="registerconfirmation.php">
           <fieldset>
-            First Name: <input type="text" id="fname" name="fname">
-            <span class="error">* <?php echo $nameErr;?></span>
+            First Name: <input type="text" id="fname" name="fname">*
             <br><br>
-            Last Name: <input type="text" id="lname" name="lname">
-            <span class="error">* <?php echo $nameErr;?></span>
+            Last Name: <input type="text" id="lname" name="lname">*
             <br><br>
-            E-mail: <input type="text" id="email" name="email">
-            <span class="error">* <?php echo $emailErr;?></span>
+            ID: <input type="text" id="id" name="id">*
+            <br><br>
+            E-mail: <input type="text" id="email" name="email">*
+            <br><br>
+            <input type="radio" id="admin" name="status" <?php if (isset($status) && $status=="admin") echo "checked";?> value="Faculty">Faculty<br>
+            <input type="radio" id="student" name="status" <?php if (isset($status) && $status=="student") echo "checked";?> value="Student">Student<br>
           </fieldset>
           <br>
           <fieldset>
@@ -140,7 +142,36 @@
         </form>
       </div>
   </article>
+  <script>
+      // define variables and set to empty values
+      ffunction validate() {
+    var a = document.getElementById("fname").value;
+    var b = document.getElementById("lname").value;
+    var c = document.getElementById("email").value;
+    var d = document.getElementById("id".value;
+    var e = document.forms["form"]["status"].value;
+    var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
+    if (a == null || a == "" || b == null || b == "" || c == null || c == "" || d == null || d == "" || e == null || e == "") {
+      alert("Please Fill All Required Field");
+      return false;
+    } else if(reg.test(a) || reg.test(b)) {
+        alert('Input is not alphanumeric');
+        return false;
+    } else if(d <= 0){
+      alert('ID must be greater than 0.');
+      return false;
+    } else if(!emailValid(c)){
+      alert('Not a valid email.');
+      return false;
+    } else {
+      return true;
+    }
+  }
 
+  function emailValid(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+    </script>
   </div>
   <footer style="padding-top:5px">
     <p class="validation">HTML:</p>

@@ -9,28 +9,34 @@
   <link rel="stylesheet" type="text/css" href="login.css" />
 </head>
 <body style="text-align:center">
-  <?php
+<?php 
+$servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "trailhead";
 
-    $servername = "localhost";$username = "root";$password = "";$dbname="trailhead";
-    $conn = new mysqli($servername, $username, $password,$dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: <br>" . $conn->connect_error);
-    }
-    $sql = $conn->prepare("select first,last,email from customers where first=(?) and last=(?)");
-    $sql->bind_param("ss",$_POST["fname"],$_POST["lname"]);
-    $sql->execute();
-    $result=$sql->get_result();
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  if($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  $file = file_get_contents("trailhead.sql");
+  if(!mysqli_multi_query($conn, $file)){
+    echo "Error: " . mysqli_error($conn);
+  }
+  while(mysqli_next_result($conn));
 
-    if ($result->num_rows>0) {
-      echo "<strong>Thanks for shopping with us again!</strong>";
-    } else {
-      echo "<strong>Welcome new customer!</strong>";
-      $sql = $conn->prepare("insert into customers(first,last,email) values(?,?,?)");
-      $sql->bind_param("sss",$_POST["fname"],$_POST["lname"],$_POST["email"]);
-      $sql->execute();
+  $username = $_POST["username"];
+  $pass = $_POST["pass"];
+  $sql1 = "SELECT id FROM USERS WHERE uname LIKE '%{$username}%' AND lastName LIKE '%{$pass}%'";
+  $result = $conn->query($sql1);
+  if(!empty($result) && $result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+      echo "Found";
     }
-    $conn->close();
-   ?>
+  } else{
+    echo "0 results";
+  }
+  $conn->close();
+  ?>
 </body>
 </html>

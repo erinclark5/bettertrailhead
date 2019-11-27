@@ -18,72 +18,67 @@
   <header>
     <h1 class="title">
     Colorado School of Mines - Trailhead</h1>
-    <nav>
-
-    </nav>
-
   </header>
   <hr>
   </div>
-
   <div class="info">
   <article>
     <?php
-    // define variables and set to empty values
-    $nameErr = "";
-    $uname = $pass = "";
-    echo "<script> var good=0;</script>";
-    date_default_timezone_set("America/Denver");
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (empty($_POST["uname"])||empty($_POST["pass"])) {
-        $nameErr = "Both fields required";
-
-      } else {
-        $uname = test_input($_POST["uname"]);
-        $pass = $_POST["pass"];
-        echo "<script>good=good+1;</script>";
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbname = "trailhead";
+    
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      if($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
       }
-    }
-
-    function test_input($data) {
-      $data = trim($data);
-      $data = stripslashes($data);
-      $data = htmlspecialchars($data);
-      return $data;
-    }
-    $time = date("m/d/Y h:i:sa");
-    ?>
+      $file = file_get_contents("trailhead.sql");
+      if(!mysqli_multi_query($conn, $file)){
+        echo "Error: " . mysqli_error($conn);
+      }
+      while(mysqli_next_result($conn));
+      date_default_timezone_set("America/Denver");?>
+      
+    <div id="login">
+    <h1>Welcome! Please log in below:</h1>
+    <p><span class="error">* required field</span></p>
+    <form method="post" action= "landing.php" onsubmit="return validate()"> 
+      <fieldset>
+        <label for="username">Username:</label> <input type="text" id="username" name="username"> *
+        <br><br>
+        <label for="pass">Password:</label><input type="text" id="pass" name="pass"> *
+        <br>
+      </fieldset>
+      <br>
+      <input type="hidden" name="time" value="<?php echo $time;?>">
+      <input type="submit" name="submit" value="Submit">
+      <input type="reset" name="reset" value="Reset">
+    </form>
+    </div>
+    <p>Or...Register here:</p>
+    <button onclick="window.location.href = 'register.php';" style="margin-botton:5px;">Register Now!</button>
+    <br><br>
+    </article>
+    </div>
     <script>
-      function imgchange(){
-        var x = document.getElementById("prod").value;
-        document.getElementById("prodpic").src = '../php/img/'.concat(x,'.jpg');
-      }
-      function isGood(){
-        if(good == 1)return true;
+      // define variables and set to empty values
+      function validate() {
+        var a = document.getElementById("username").value;
+        var b = document.getElementById("pass").value;
+        var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
+        if (a == null || a == "" || b == null || b == "") {
+          alert("Please Fill All Required Field");
+          return false;
+        } else if(reg.test(a) || reg.test(b)) {
+            alert('Input is not alphanumeric');
+            return false;
+        } else {
+          return true;
+        }
       }
     </script>
-      <div id="login">
-        <h1>Welcome! Please log in below:</h1>
-        <p><span class="error">* required field</span></p>
-        <form method="post" onsubmit=isGood() action="landing.php">
-          <fieldset>
-            Username: <input type="text" id="uname" name="uname">
-            <span class="error">* <?php echo $nameErr;?></span>
-            <br><br>
-            Password: <input type="password" id="pass" name="pass">
-            <span class="error">* <?php echo $nameErr;?></span>
-          </fieldset>
-          <br>
-          <input type="hidden" name="time" value="<?php echo $time;?>">
-          <input type="submit" name="submit" value="Submit">
-          <input type="reset" name="reset" value="Reset">
-        </form>
-      </div>
-      <p>Or...Register here:</p>
-      <button onclick="window.location.href = 'register.php';" style="margin-bottom:5px;">Register Now!</button>
-  </article>
-
+</article>
   </div>
   <footer style="padding-top:5px">
     <p class="validation">HTML:</p>

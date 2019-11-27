@@ -28,9 +28,10 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `Alias` text NOT NULL
+CREATE TABLE ADMINISTRATION (
+  'id' int(11) NOT NULL,
+  'firstname' text NOT NULL,
+  'lastname' text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -39,7 +40,7 @@ CREATE TABLE `admin` (
 -- Table structure for table `courses`
 --
 
-CREATE TABLE `courses` (
+CREATE TABLE COURSES (
   `courseid` varchar(7) NOT NULL,
   `name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -50,7 +51,7 @@ CREATE TABLE `courses` (
 -- Table structure for table `schedules`
 --
 
-CREATE TABLE `schedules` (
+CREATE TABLE SCHEDULES (
   `studentid` int(11) NOT NULL,
   `courseid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -61,10 +62,10 @@ CREATE TABLE `schedules` (
 -- Table structure for table `students`
 --
 
-CREATE TABLE `students` (
+CREATE TABLE STUDENTS (
   `id` int(11) NOT NULL,
-  `First` text NOT NULL,
-  `Last` text NOT NULL
+  `firstname` text NOT NULL,
+  `lastname` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -73,9 +74,9 @@ CREATE TABLE `students` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE USERS (
   `uname` text NOT NULL,
-  `password` text NOT NULL,
+  `pass` text NOT NULL,
   `email` text NOT NULL,
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -113,7 +114,7 @@ ALTER TABLE `students`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uname` (`uname`,`password`,`email`,`id`) USING HASH;
+  ADD UNIQUE KEY `uname` (`uname`,`pass`,`email`,`id`) USING HASH;
 
 --
 -- Constraints for dumped tables
