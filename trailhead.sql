@@ -33,3 +33,8 @@ CREATE TABLE IF NOT EXISTS STUDENTS (
   lastname text NOT NULL,
   PRIMARY KEY(studentid)
 );
+
+INSERT INTO COURSES VALUES 
+("CSCI406","Algorithms"),
+("CSCI441","Computer Graphics"),
+("CSCI445","Web Programming");

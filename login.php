@@ -27,7 +27,7 @@
       $servername = "localhost";
       $username = "root";
       $password = "";
-      $dbname = "trailhead";
+      $dbname = "mysql";
     
       $conn = new mysqli($servername, $username, $password, $dbname);
       if($conn->connect_error) {

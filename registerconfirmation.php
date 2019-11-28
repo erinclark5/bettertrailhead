@@ -25,15 +25,19 @@
   <div class="info">
   <article>
     <h2>You have been registered!</h2>
+	
+	<a href="login.php" class="web">Go back to login</a>
+
     <?php 
   $servername = "localhost";
   $username = "root";
   $password = "";
-  $dbname = "trailhead";
+  $dbname = "mysql";
   error_reporting(E_ALL);
   $conn = new mysqli($servername, $username, $password, $dbname);
   if($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
+	  
   }
   $file = file_get_contents("trailhead.sql");
   if(!mysqli_multi_query($conn, $file)){

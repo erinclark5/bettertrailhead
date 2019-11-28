@@ -59,7 +59,7 @@
   </article>
   <script>
       // define variables and set to empty values
-      ffunction validate() {
+      function validate() {
     var a = document.getElementById("fname").value;
     var b = document.getElementById("lname").value;
     var c = document.getElementById("email").value;
