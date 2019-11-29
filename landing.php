@@ -43,58 +43,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">			
 </script>
 
-	<script>
-		function updateAdd() {
-			
-			if (fname.length==0 && lname.length==0 && email.length==0) {
-				document.getElementById("livesearch").innerHTML="";
-				document.getElementById("livesearch").style.border="0px";
-				return;
-			}
-			if (window.XMLHttpRequest) {
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp=new XMLHttpRequest();
-			} else {  // code for IE6, IE5
-				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			xmlhttp.onreadystatechange=function() {
-				if (this.readyState==4 && this.status==200) {
-				document.getElementById("livesearch").innerHTML=this.responseText;
-				document.getElementById("livesearch").style.border="1px solid #A5ACB2";
-				}
-			}
-			xmlhttp.open("GET","gethint.php?q="+fname+"&r="+lname+"&s="+email,true);
-			xmlhttp.send();
-		}
-		
-		function updateDelete() {
-			
-			if (fname.length==0 && lname.length==0 && email.length==0) {
-				document.getElementById("livesearch").innerHTML="";
-				document.getElementById("livesearch").style.border="0px";
-				return;
-			}
-			if (window.XMLHttpRequest) {
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp=new XMLHttpRequest();
-			} else {  // code for IE6, IE5
-				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			xmlhttp.onreadystatechange=function() {
-				if (this.readyState==4 && this.status==200) {
-				document.getElementById("livesearch").innerHTML=this.responseText;
-				document.getElementById("livesearch").style.border="1px solid #A5ACB2";
-				}
-			}
-			xmlhttp.open("GET","gethint.php?q="+fname+"&r="+lname+"&s="+email,true);
-			xmlhttp.send();
-		}
-
-	</script>
-
-
-
-
 <?php 
 $servername = "localhost";
   $username = "root";
@@ -113,29 +61,86 @@ $servername = "localhost";
 
   $username = $_POST["username"];
   $pass = $_POST["pass"];
-  $sql1 = "SELECT id FROM USERS WHERE uname LIKE '$username' AND pass LIKE '$pass'";
+  $sql1 = "SELECT id FROM USERS WHERE uname = '$username' AND pass = '$pass'";
   $result = $conn->query($sql1);
   if(!empty($result) && $result->num_rows > 0){
     while($row = $result->fetch_assoc()){
-      echo "Found";
+      $userID = $row["id"];
     }
   } else{
     echo "0 results";
   }
   ?>
+
+
+
+	<script>
+		
+		function updateAdd() { 
+			
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			} else {  // code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function() {
+				if (this.readyState==4 && this.status==200) {
+					document.getElementById("scheduleTable").innerHTML=this.responseText;
+				}
+			}
+			
+			
+			var className = document.getElementById('selection').value;
+			var userInfo = '<?php echo $userID; ?>';
+
+			xmlhttp.open("GET","addlanding.php?q="+className+"&r="+userInfo,true);
+			xmlhttp.send();
+		}
+		
+		function updateDelete() {
+			
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			} else {  // code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function() {
+				if (this.readyState==4 && this.status==200) {
+					document.getElementById("scheduleTable").innerHTML=this.responseText;
+				}
+			}
+			
+			
+			var className = document.getElementById('selectionDel').value;
+			var userInfo = '<?php echo $userID; ?>';
+
+			xmlhttp.open("GET","deletelanding.php?q="+className+"&r="+userInfo,true);
+			xmlhttp.send();
+		}
+
+	</script>
+
+
+
+
+
   
 	
 	<?php 
-		$sql = "SELECT students.firstname FROM STUDENTS, USERS WHERE students.studentid = users.id "; 
+		$sql = "SELECT students.firstname FROM STUDENTS, USERS WHERE students.studentid = '$userID' "; 
 		$result = $conn->query($sql);
 		$row = mysqli_fetch_assoc($result);
 	?>
   
-	<h1>Welcome, <?php echo $row["firstname"] ?>. Make some changes! </h1>
+	<h1>Welcome, <?php echo $row["firstname"] ?>! Make some changes! </h1>
   
 	<label>Add an available course to your schedule: </label>
 	<br />
-	<select name="" id="selection" onchange='check();'>					
+	<select name="" id="selection">					
 		<?php					
 		$sql = "SELECT courseid, coursename FROM COURSES";
 		$result = mysqli_query($conn, $sql);
@@ -152,7 +157,7 @@ $servername = "localhost";
 		?>
 	</select>
 	
-	<button onclick="updateAdd();" style="margin-botton:5px;">Submit Change</button>
+	<button type="button" onclick="updateAdd();" style="margin-botton:5px;">Submit Change</button>
 	
 	<?php 
 		$sql = "SELECT students.firstname FROM STUDENTS, USERS WHERE students.studentid = users.id "; 
@@ -165,7 +170,7 @@ $servername = "localhost";
 	
 	<label>Delete a course from your schedule: </label>
 	<br />
-	<select name="" id="selection" onchange='check();'>					
+	<select name="" id="selectionDel" onchange='check();'>					
 		<?php					
 		$sql = "SELECT courseid, coursename FROM COURSES";
 		$result = mysqli_query($conn, $sql);
@@ -190,7 +195,7 @@ $servername = "localhost";
 	<br />
 	
 	
-		<table id="scheduleTable" style="width:100%">
+	<table id="scheduleTable" style="width:100%">
 		<caption>Your current schedule</caption>
 		<thead>
 			<tr>

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS COURSES (
 
 CREATE TABLE IF NOT EXISTS SCHEDULES (
   studentid int NOT NULL,
-  courseid int,
+  courseid varchar(255),
   PRIMARY KEY(studentid, courseid)
 );
 
