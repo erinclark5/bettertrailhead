@@ -204,10 +204,21 @@ $servername = "localhost";
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Placeholder</td>
-				<td>Placeholder</td>
-			</tr>
+			
+			
+		<?php
+			$sql = "SELECT schedules.courseid, courses.coursename FROM schedules, courses
+		    WHERE '$userID' = schedules.studentid AND schedules.courseid = courses.courseid ";
+			$result = mysqli_query($conn, $sql);
+
+			while($row = mysqli_fetch_assoc($result)) {
+				echo "<tr>";
+				echo "<td>" . $row["courseid"] . "</td> ";
+				echo "<td>" . $row["coursename"] . "</td>";
+				echo "</tr>";
+			}
+		?>		
+			
 		</tbody>
 	</table>
 	
