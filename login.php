@@ -28,7 +28,7 @@
       $username = "root";
       $password = "";
       $dbname = "mysql";
-    
+
       $conn = new mysqli($servername, $username, $password, $dbname);
       if($conn->connect_error) {
           die("Connection failed: " . $conn->connect_error);
@@ -39,19 +39,18 @@
       }
       while(mysqli_next_result($conn));
       date_default_timezone_set("America/Denver");?>
-      
+
     <div id="login">
     <h1>Welcome! Please log in below:</h1>
     <p><span class="error">* required field</span></p>
-    <form method="post" action= "landing.php" onsubmit="return validate()"> 
+    <form method="post" action= "conn.php" onsubmit="return validate()">
       <fieldset>
-        <label for="username">Username:</label> <input type="text" id="username" name="username"> *
+        <label for="username">Username: </label> <input type="text" id="username" name="username"><span class="error">*</span>
         <br><br>
-        <label for="pass">Password:</label><input type="text" id="pass" name="pass"> *
+        <label for="pass">Password: </label><input type="password" id="pass" name="pass"><span class="error">*</span>
         <br>
       </fieldset>
       <br>
-      <input type="hidden" name="time" value="<?php echo $time;?>">
       <input type="submit" name="submit" value="Submit">
       <input type="reset" name="reset" value="Reset">
     </form>
@@ -68,7 +67,7 @@
         var b = document.getElementById("pass").value;
         var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
         if (a == null || a == "" || b == null || b == "") {
-          alert("Please Fill All Required Field");
+          alert("Please Fill All Required Fields");
           return false;
         } else if(reg.test(a) || reg.test(b)) {
             alert('Input is not alphanumeric');

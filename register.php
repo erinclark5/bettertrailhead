@@ -33,59 +33,63 @@
         <p><span class="error">* required field</span></p>
         <form method="post" onsubmit="return validate()" action="registerconfirmation.php">
           <fieldset>
-            First Name: <input type="text" id="fname" name="fname">*
+            First Name: <input type="text" id="fname" name="fname"><span class="error">*</span>
             <br><br>
-            Last Name: <input type="text" id="lname" name="lname">*
+            Last Name: <input type="text" id="lname" name="lname"><span class="error">*</span>
             <br><br>
-            ID: <input type="text" id="id" name="id">*
-            <br><br>
-            E-mail: <input type="text" id="email" name="email">*
+            E-mail: <input type="text" id="email" name="email"><span class="error">*</span>
             <br><br>
             <input type="radio" id="admin" name="status" <?php if (isset($status) && $status=="admin") echo "checked";?> value="Faculty">Faculty<br>
             <input type="radio" id="student" name="status" <?php if (isset($status) && $status=="student") echo "checked";?> value="Student">Student<br>
           </fieldset>
           <br>
           <fieldset>
-            Username: <input type="text" id="uname" name="uname">
+            Username: <input type="text" id="uname" name="uname"><span class="error">*</span>
             <br><br>
-            Password: <input type="text" id="pass" name="pass">
+            Password: <input type="password" id="pass" name="pass"><span class="error">*</span>
           </fieldset>
           <br>
-          <input type="hidden" name="time" value="<?php echo $time;?>">
           <input type="submit" name="submit" value="Submit">
           <input type="reset" name="reset" value="Reset">
         </form>
       </div>
   </article>
-  <script>
-      // define variables and set to empty values
+    <script>
+      // define variables and check if valid
       function validate() {
-    var a = document.getElementById("fname").value;
-    var b = document.getElementById("lname").value;
-    var c = document.getElementById("email").value;
-    var d = document.getElementById("id".value;
-    var e = document.forms["form"]["status"].value;
-    var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
-    if (a == null || a == "" || b == null || b == "" || c == null || c == "" || d == null || d == "" || e == null || e == "") {
-      alert("Please Fill All Required Field");
-      return false;
-    } else if(reg.test(a) || reg.test(b)) {
-        alert('Input is not alphanumeric');
-        return false;
-    } else if(d <= 0){
-      alert('ID must be greater than 0.');
-      return false;
-    } else if(!emailValid(c)){
-      alert('Not a valid email.');
-      return false;
-    } else {
-      return true;
-    }
-  }
+        var a = document.getElementById("fname").value;
+        var b = document.getElementById("lname").value;
+        var c = document.getElementById("email").value;
+        var u = document.getElementById("uname").value;
+        var p = document.getElementById("pass").value;
+        var radios = document.getElementsByName('status');
+        for (var i = 0, length = radios.length; i < length; i++)
+        {
+         if (radios[i].checked)
+         {
+          var e = radios[i].value;
+          break;
+         }
+        }
+        var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
 
-  function emailValid(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
+        if (a == null || a == "" || b == null || b == "" || c == null || c == "" || u == null || u == "" || p == null || p == "" || e == null || e == "") {
+          alert("Please Fill All Required Fields");
+          return false;
+        } else if(reg.test(a) || reg.test(b) || reg.test(u)) {
+          alert('Input is not alphanumeric');
+          return false;
+        } else if(!emailValid(c)){
+          alert('Not a valid email.');
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      function emailValid(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
     </script>
   </div>
   <footer style="padding-top:5px">

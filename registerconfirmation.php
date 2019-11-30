@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang=en-us>
 <head>
-  <title>Registration</title>
+  <title>Registration Confirmation</title>
   <meta charset="utf-8">
   <meta name="description" content="Trailhead Student Service">
   <meta name="author" content="Erin Clark, Seifeldin Dabbour, Adrian Estrada">
@@ -25,52 +25,67 @@
   <div class="info">
   <article>
     <h2>You have been registered!</h2>
-	
-	<a href="login.php" class="web">Go back to login</a>
 
-    <?php 
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "mysql";
+	<button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+
+    <?php
+  $servername = "localhost";$username = "root";$password = "";$dbname = "trailhead";
   error_reporting(E_ALL);
   $conn = new mysqli($servername, $username, $password, $dbname);
   if($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
-	  
   }
-  $file = file_get_contents("trailhead.sql");
-  if(!mysqli_multi_query($conn, $file)){
-    echo "Error: " . mysqli_error($conn);
-  }
-  while(mysqli_more_results($conn)){ mysqli_next_result($conn); }
-  echo $conn->error;
-  ini_set('display_errors', 1);
+  // $file = file_get_contents("trailhead.sql");
+  // if(!mysqli_multi_query($conn, $file)){
+  //   echo "Error: " . mysqli_error($conn);
+  // }
+  // while(mysqli_more_results($conn)){ mysqli_next_result($conn); }
+  // echo $conn->error;
+  // ini_set('display_errors', 1);
   $firstname = $_POST["fname"];
   $lastname = $_POST["lname"];
   $email = $_POST["email"];
-  $id = $_POST["id"];
   $username = $_POST["uname"];
   $password = $_POST["pass"];
   $student = false;
   if($_POST["status"] == "Student"){
       $student = true;
-  } 
-  $sql = "INSERT INTO USERS (uname, pass, email, id) VALUES (?, ?, ?, ?)";
+  }
+
+  function checkID($inputID){
+    $idd=$inputID;
+    global $conn;
+    $res=$conn->query("SELECT * FROM users WHERE id = '$idd'");
+    if($res->num_rows > 0){return false;}
+    return true;
+  }
+  $id=rand(1000,9999);
+  while(checkID($id)==false){
+    $id=rand(1000,9999);
+  }
+
+
+  $sql = "INSERT INTO USERS (uname, password, id) VALUES (?, ?, ?)";
   $stmt = $conn->prepare($sql);
   echo $conn->error;
-  $stmt->bind_param("sssi", $username, $password, $email, $id);
+  $stmt->bind_param("ssi", $username, $password, $id);
   $stmt->execute();
 
   if($student == true){
     $sql = "INSERT INTO STUDENTS (studentid, firstname, lastname) VALUES (?, ?, ?)";
+    $stmt2 = $conn->prepare($sql);
+    echo $conn->error;
+    $stmt2->bind_param("iss", $id, $firstname, $lastname);
+    $stmt2->execute();
   } else {
-    $sql = "INSERT INTO ADMINISTRATION (adminid, firstname, lastname) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO admin (id, alias) VALUES (?, ?)";
+    $stmt2 = $conn->prepare($sql);
+    echo $conn->error;
+    $alias = $firstname.$lastname;
+    $stmt2->bind_param("is", $id, $alias);
+    $stmt2->execute();
   }
-  $stmt2 = $conn->prepare($sql);
-  echo $conn->error;
-  $stmt2->bind_param("iss", $id, $firstname, $lastname);
-  $stmt2->execute(); 
+
   $conn->close();
   ?>
   </div>
