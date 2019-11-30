@@ -24,7 +24,7 @@
   session_start();
   $username = $_POST["username"];
   $password = $_POST["pass"];
-  $sql = "SELECT id FROM USERS WHERE uname = (?) AND password = (?)";
+  $sql = "SELECT id FROM users WHERE uname = (?) AND password = (?)";
   $stmt = $conn->prepare($sql);
   echo $conn->error;
   $stmt->bind_param("ss", $username, $password);

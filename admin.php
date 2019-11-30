@@ -123,6 +123,9 @@
       <input type="reset" name="reset" value="Reset">
       <br><br>
     </form>
+    <br><br>
+	  <button type="button" onclick="location.href='logout.php'" style="margin-botton:5px;">Logout</button>
+	  <br><br>
   </div>
   <footer style="padding-top:5px">
     <p class="validation">HTML:</p>

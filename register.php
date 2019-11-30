@@ -39,8 +39,8 @@
             <br><br>
             E-mail: <input type="text" id="email" name="email"><span class="error">*</span>
             <br><br>
-            <input type="radio" id="admin" name="status" <?php if (isset($status) && $status=="admin") echo "checked";?> value="Faculty">Faculty<br>
-            <input type="radio" id="student" name="status" <?php if (isset($status) && $status=="student") echo "checked";?> value="Student">Student<br>
+            <input type="radio" id="admin" name="status" <?php if (isset($status) && $status=="admin") echo "checked";?> value="admin">Faculty<br>
+            <input type="radio" id="student" name="status" <?php if (isset($status) && $status=="student") echo "checked";?> value="student">Student<br>
           </fieldset>
           <br>
           <fieldset>
@@ -51,6 +51,7 @@
           <br>
           <input type="submit" name="submit" value="Submit">
           <input type="reset" name="reset" value="Reset">
+          <button type="button" onclick="location.href='login.php'" style="margin-botton:5px;">Login</button>
         </form>
       </div>
   </article>
@@ -100,6 +101,7 @@
     <p class="validation">WCAG:</p>
     <img class="validation" src="images/wcag2AAA.png" alt="wcag validation" style="height:2em">
     <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("register.php"));?>
+    <br>
   </footer>
 </body>
 </html>

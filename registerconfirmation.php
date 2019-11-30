@@ -27,6 +27,7 @@
     <h2>You have been registered!</h2>
 
 	<button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+  <br><br>
 
     <?php
   $servername = "localhost";$username = "root";$password = "";$dbname = "trailhead";
@@ -47,9 +48,9 @@
   $email = $_POST["email"];
   $username = $_POST["uname"];
   $password = $_POST["pass"];
-  $student = false;
-  if($_POST["status"] == "Student"){
-      $student = true;
+  $student = "false";
+  if($_POST["status"] == "student"){
+      $student = "true";
   }
 
   function checkID($inputID){
@@ -65,17 +66,17 @@
   }
 
 
-  $sql = "INSERT INTO USERS (uname, password, id) VALUES (?, ?, ?)";
+  $sql = "INSERT INTO users (uname, password, id) VALUES (?, ?, ?)";
   $stmt = $conn->prepare($sql);
   echo $conn->error;
   $stmt->bind_param("ssi", $username, $password, $id);
   $stmt->execute();
 
-  if($student == true){
-    $sql = "INSERT INTO STUDENTS (studentid, firstname, lastname) VALUES (?, ?, ?)";
+  if($student == "true"){
+    $sql = "INSERT INTO students (id, first, last, email) VALUES (?, ?, ?, ?)";
     $stmt2 = $conn->prepare($sql);
     echo $conn->error;
-    $stmt2->bind_param("iss", $id, $firstname, $lastname);
+    $stmt2->bind_param("isss", $id, $firstname, $lastname, $email);
     $stmt2->execute();
   } else {
     $sql = "INSERT INTO admin (id, alias) VALUES (?, ?)";
