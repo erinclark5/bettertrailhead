@@ -39,9 +39,13 @@
   <?php
     session_start();
     if(time()>=$_SESSION['exp']){
-    echo "<script>alert('Login token timeout');
-    window.location.replace('login.php');</script>";
-  } ?>
+      echo "<script>alert('Login token timeout');
+      window.location.replace('login.php');</script>";}
+    if(empty($_SESSION['aliasID'])){
+      echo "<script>alert('Not an admin!');
+      window.location.replace('landing.php');</script>";
+    }
+   ?>
   <div class="info" id="#top">
   <hr>
   <header>
@@ -72,6 +76,9 @@
         }
       }
     </script>
+    <button onclick="window.location.href = 'catalog.php';" style="margin-botton:5px;">Course Catalog</button>
+    <button onclick="window.location.href = 'reset.php';" style="margin-botton:5px;">Change Password</button>
+    <br><br>
     <h2>Your Courses</h2>
     <table style="margin:auto">
       <thead>

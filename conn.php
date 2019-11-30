@@ -45,7 +45,6 @@
         // Deprecated JS cookie:
         // echo "<script>setCookie('alias','$a');</script>";
         $_SESSION['alias']=$a;
-        print_r($_SESSION);
         echo "<script>window.location.replace('admin.php');</script>";
       }else{
         $adRes=$conn->query("SELECT first,last FROM students WHERE id = '$userID'");

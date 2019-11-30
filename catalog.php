@@ -72,7 +72,7 @@
     <?php
     $sql = "SELECT * FROM courses";
 	$result = $conn->query($sql);
-    
+
     echo "<table>";
 	echo "<caption>Courses</caption>";
 	echo "<thead>";
@@ -82,14 +82,14 @@
 	echo "</tr>";
 	echo "</thead>";
 	echo "<tbody>";
-	
+
 	if($result && $result->num_rows > 0){
 	    while($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<br>";
 		    $num = "<td>" . $row['courseid'] . "</td>" . " ";
 		    $name = "<td>" . $row['name'] . "</td>";
-		
+
 		    echo $num;
 		    echo $name;
 		    echo "</tr>";
@@ -98,10 +98,21 @@
 	echo "</tbody>";
     echo "</table>";
     echo "<br>";
-
 ?>
+<script>
 
-<button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Login</button>
+  function ret(){
+
+    <?php
+      session_start();
+      $val=1-empty($_SESSION['aliasID']);
+      echo "var x = ".$val.";";
+     ?>
+    if(x==1){window.location.href = 'admin.php';}
+    else{window.location.href = 'landing.php';}
+  }
+</script>
+<button onclick="ret()" style="margin-botton:5px;">Back</button>
 </div>
 
   </div>

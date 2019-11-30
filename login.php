@@ -53,7 +53,6 @@
       <br>
       <input type="submit" name="submit" value="Submit">
       <input type="reset" name="reset" value="Reset">
-      <button onclick="window.location.href = 'catalog.php';" style="margin-botton:5px;">Catalog</button>
     </form>
     </div>
     <p>Or...Register here:</p>

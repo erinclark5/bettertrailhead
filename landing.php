@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="login.css" />
 	<!-- Styling. Mainly used for table -->
 	<style>
-		.landing { 
+		.landing {
 			background-color: lightgrey;
 			width: 90%;
 			border-radius: 15px;
@@ -71,11 +71,13 @@
 	?>
 
 	<h1>Welcome, <?php echo $row["first"] ?>! Make some changes! </h1>
-
-	<label>Add an available course to your schedule: </label>
+  <button onclick="window.location.href = 'catalog.php';" style="margin-botton:5px;">Course Catalog</button>
+  <button onclick="window.location.href = 'reset.php';" style="margin-botton:5px;">Change Password</button>
+  <br><br>
+  <label>Add an available course to your schedule: </label>
 	<br />
 	<select name="add" id="selection">
-	<option value="" disabled selected>Please select a course</option> 
+	<option value="" disabled selected>Please select a course</option>
 		<?php
 		$sql = "SELECT courseid, name FROM courses WHERE courseid NOT IN (SELECT courseid FROM schedules
 		WHERE userid = '$userID')";
@@ -104,7 +106,7 @@
 	<label>Delete a course from your schedule: </label>
 	<br />
 	<select name="add" id="selectionDel">
-	<option value="" disabled selected>Please select a course</option> 
+	<option value="" disabled selected>Please select a course</option>
 		<?php
 		$sql = "SELECT schedules.courseid, courses.name FROM schedules, courses
 		WHERE '$userID' = schedules.userid AND schedules.courseid = courses.courseid  ";
@@ -175,7 +177,7 @@
 			}
 			var className = document.getElementById('selection').value;
 			var userInfo = '<?php echo $userID; ?>';
-			
+
 			xmlhttp.open("GET","addlanding.php?q="+className+"&r="+userInfo,true);
 			xmlhttp.send();
 		}
