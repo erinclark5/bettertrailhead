@@ -1,0 +1,9 @@
+<?php
+session_start();
+unset($_SESSION["id"]);
+unset($_SESSION["exp"]);
+unset($_SESSION["first"]);
+unset($_SESSION["last"]);
+unset($_SESSION["alias"]);
+header("Location:login.php");
+?>
