@@ -41,7 +41,7 @@
     if(time()>=$_SESSION['exp']){
       echo "<script>alert('Login token timeout');
       window.location.replace('login.php');</script>";}
-    if(empty($_SESSION['aliasID'])){
+    if(isset($_SESSION['first'])){
       echo "<script>alert('Not an admin!');
       window.location.replace('landing.php');</script>";
     }

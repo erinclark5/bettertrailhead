@@ -67,7 +67,6 @@
 	$result = $conn->query($sql);
 	echo $conn->error;
 	$row = $result->fetch_assoc();
-
 	?>
 
 	<h1>Welcome, <?php echo $row["first"] ?>! Make some changes! </h1>
