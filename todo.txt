@@ -1,0 +1,6 @@
+TODO:
+Implement forgot password
+Registration Email confirmation
+Landing page cleanup?
+Check to make sure fully functional
+??? Maybe putting in an "all courses" and/or an "all students page" ???
