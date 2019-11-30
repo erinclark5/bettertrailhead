@@ -34,7 +34,8 @@
 
   if(!empty($result) && $result->num_rows > 0){
     while($row = $result->fetch_assoc()){
-      $userID = $row["id"];
+      $userID = $row['id'];
+      $_SESSION['id']=$userID;
       $_SESSION['exp']=time()+3600;
       // Check if the user is an admin
       $adRes=$conn->query("SELECT alias FROM admin WHERE id = '$userID'");

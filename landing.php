@@ -88,12 +88,18 @@
 
 
 	<?php
-		$sql = "SELECT students.firstname FROM STUDENTS, USERS WHERE students.studentid = '$userID' ";
+    $servername = "localhost";$username = "root";$password = "";$dbname = "trailhead";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    $userID=$_SESSION['id'];
+		$sql = "SELECT first FROM STUDENTS WHERE id = '$userID' ";
 		$result = $conn->query($sql);
-		$row = mysqli_fetch_assoc($result);
+		$row = $result->fetch_assoc();
 	?>
 
-	<h1>Welcome, <?php echo $row["firstname"] ?>! Make some changes! </h1>
+	<h1>Welcome, <?php echo $row["first"] ?>! Make some changes! </h1>
 
 	<label>Add an available course to your schedule: </label>
 	<br />
@@ -117,9 +123,9 @@
 	<button type="button" onclick="updateAdd();" style="margin-botton:5px;">Submit Change</button>
 
 	<?php
-		$sql = "SELECT students.firstname FROM STUDENTS, USERS WHERE students.studentid = users.id ";
+		$sql = "SELECT first FROM STUDENTS WHERE id = '$userID' ";
 		$result = $conn->query($sql);
-		$row = mysqli_fetch_assoc($result);
+		$row = $result->fetch_assoc();
 	?>
 
 	<br />
@@ -164,11 +170,11 @@
 
 
 		<?php
-			$sql = "SELECT schedules.courseid, courses.coursename FROM schedules, courses
-		    WHERE '$userID' = schedules.studentid AND schedules.courseid = courses.courseid ";
+			$sql = "SELECT schedules.courseid, courses.name FROM schedules, courses
+		    WHERE '$userID' = schedules.userid AND schedules.courseid = courses.courseid ";
 			$result = mysqli_query($conn, $sql);
 
-			while($row = mysqli_fetch_assoc($result)) {
+			while($row = $result->fetch_assoc()) {
 				echo "<tr>";
 				echo "<td>" . $row["courseid"] . "</td> ";
 				echo "<td>" . $row["coursename"] . "</td>";
