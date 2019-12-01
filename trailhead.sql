@@ -120,21 +120,32 @@ INSERT INTO `students` (`id`, `first`, `last`, `email`) VALUES
 --
 -- Table structure for table `users`
 --
+CREATE TABLE `temp` (
+  `code` text NOT NULL,
+  `uname` text NOT NULL,
+  `password` text NOT NULL,
+  `id` int(11) NOT NULL,
+  `email` text NOT NULL,
+  `stat` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 
 CREATE TABLE `users` (
   `uname` text NOT NULL,
   `password` text NOT NULL,
-  `id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `email` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`uname`, `password`, `id`) VALUES
-('swdab', 'dabby', 1001),
-('student', 'pass', 1011),
-('daswod', 'dabby', 1296);
+INSERT INTO `users` (`uname`, `password`, `id`, `email`) VALUES
+('swdab', 'dabby', 1001, 'sw@mines.edu'),
+('student', 'pass', 1011, 'stud@mines.edu'),
+('daswod', 'dabby', 1296, 'da@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -169,7 +180,7 @@ ALTER TABLE `students`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uname` (`uname`,`password`,`id`) USING HASH;
+  ADD UNIQUE KEY `uname` (`uname`,`password`,`id`, `email`) USING HASH;
 
 --
 -- Constraints for dumped tables

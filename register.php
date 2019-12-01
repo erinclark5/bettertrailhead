@@ -31,7 +31,7 @@
       <div id="login">
         <h1>Welcome! Please register here:</h1>
         <p><span class="error">* required field</span></p>
-        <form method="post" onsubmit="return validate()" action="registerconfirmation.php">
+        <form method="post" onsubmit="return validate()" action="emailconfirmation.php">
           <fieldset>
             First Name: <input type="text" id="fname" name="fname"><span class="error">*</span>
             <br><br>

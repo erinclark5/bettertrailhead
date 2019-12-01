@@ -71,7 +71,7 @@
 
 	<h1>Welcome, <?php echo $row["first"] ?>! Make some changes! </h1>
   <button onclick="window.location.href = 'catalog.php';" style="margin-botton:5px;">Course Catalog</button>
-  <button onclick="window.location.href = 'reset.php';" style="margin-botton:5px;">Change Password</button>
+  <button onclick="window.location.href = 'changepass.php';" style="margin-botton:5px;">Change Password</button>
   <br><br>
   <label>Add an available course to your schedule: </label>
 	<br />

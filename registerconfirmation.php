@@ -24,11 +24,6 @@
 
   <div class="info">
   <article>
-    <h2>You have been registered!</h2>
-
-	<button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
-  <br><br>
-
     <?php
   $servername = "localhost";$username = "root";$password = "";$dbname = "trailhead";
   error_reporting(E_ALL);
@@ -43,52 +38,50 @@
   // while(mysqli_more_results($conn)){ mysqli_next_result($conn); }
   // echo $conn->error;
   // ini_set('display_errors', 1);
-  $firstname = $_POST["fname"];
-  $lastname = $_POST["lname"];
-  $email = $_POST["email"];
-  $username = $_POST["uname"];
-  $password = $_POST["pass"];
-  $student = "false";
-  if($_POST["status"] == "student"){
-      $student = "true";
-  }
-
-  function checkID($inputID){
-    $idd=$inputID;
-    global $conn;
-    $res=$conn->query("SELECT * FROM users WHERE id = '$idd'");
-    if($res->num_rows > 0){return false;}
-    return true;
-  }
-  $id=rand(1000,9999);
-  while(checkID($id)==false){
-    $id=rand(1000,9999);
-  }
-
-
-  $sql = "INSERT INTO users (uname, password, id) VALUES (?, ?, ?)";
-  $stmt = $conn->prepare($sql);
-  echo $conn->error;
-  $stmt->bind_param("ssi", $username, $password, $id);
-  $stmt->execute();
-
-  if($student == "true"){
-    $sql = "INSERT INTO students (id, first, last, email) VALUES (?, ?, ?, ?)";
-    $stmt2 = $conn->prepare($sql);
+  
+  $passkey = $_GET["passkey"];
+  $sql = "SELECT * FROM temp WHERE code='$passkey'";
+  $result = $conn->query($sql);
+  if($result){
+    $count=$result->num_rows();
+    if($count == 1){
+      $row = $result->fetch_assoc();
+      $username = $row["uname"];
+      $password = $row["password"];
+      $id = $row["id"];
+      $email = $row["email"];
+      $student = $row["stat"];
+    }
+    $sql = "INSERT INTO users (uname, password, id, email) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
     echo $conn->error;
-    $stmt2->bind_param("isss", $id, $firstname, $lastname, $email);
-    $stmt2->execute();
+    $stmt->bind_param("ssis", $username, $password, $id, $email);
+    $stmt->execute();
+
+    if($student == "true"){
+      $sql = "INSERT INTO students (id, first, last, email) VALUES (?, ?, ?, ?)";
+      $stmt2 = $conn->prepare($sql);
+      echo $conn->error;
+      $stmt2->bind_param("isss", $id, $firstname, $lastname, $email);
+      $stmt2->execute();
+    } else {
+      $sql = "INSERT INTO admin (id, alias) VALUES (?, ?)";
+      $stmt2 = $conn->prepare($sql);
+      echo $conn->error;
+      $alias = $firstname.$lastname;
+      $stmt2->bind_param("is", $id, $alias);
+      $stmt2->execute();
+    }
   } else {
-    $sql = "INSERT INTO admin (id, alias) VALUES (?, ?)";
-    $stmt2 = $conn->prepare($sql);
-    echo $conn->error;
-    $alias = $firstname.$lastname;
-    $stmt2->bind_param("is", $id, $alias);
-    $stmt2->execute();
+    echo "Wrong confirmation code";
   }
-
+  $sql = "DELETE FROM temp WHERE code = '$code'";
+  $result = $conn->query($sql);
   $conn->close();
   ?>
+  <h2>You have been registered!</h2>
+  <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+  <br><br>
   </div>
   <footer style="padding-top:10px">
     <p class="validation">HTML:</p>

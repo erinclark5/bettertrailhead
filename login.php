@@ -53,6 +53,7 @@
       <br>
       <input type="submit" name="submit" value="Submit">
       <input type="reset" name="reset" value="Reset">
+      <button onclick="window.location.href = 'forgotpassword.php';" style="margin-botton:5px;">Forgot Password</button>
     </form>
     </div>
     <p>Or...Register here:</p>
@@ -67,10 +68,10 @@
         var b = document.getElementById("pass").value;
         var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
         if (a == null || a == "" || b == null || b == "") {
-          alert("Please Fill All Required Fields");
+          //alert("Please Fill All Required Fields");
           return false;
         } else if(reg.test(a) || reg.test(b)) {
-            alert('Input is not alphanumeric');
+            //alert('Input is not alphanumeric');
             return false;
         } else {
           return true;

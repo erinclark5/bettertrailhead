@@ -77,7 +77,7 @@
       }
     </script>
     <button onclick="window.location.href = 'catalog.php';" style="margin-botton:5px;">Course Catalog</button>
-    <button onclick="window.location.href = 'reset.php';" style="margin-botton:5px;">Change Password</button>
+    <button onclick="window.location.href = 'changepass.php';" style="margin-botton:5px;">Change Password</button>
     <br><br>
     <h2>Your Courses</h2>
     <table style="margin:auto">
