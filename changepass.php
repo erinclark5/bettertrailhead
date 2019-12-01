@@ -47,8 +47,6 @@
       <fieldset>
         <label for="username">Username: </label> <input type="text" id="username" name="username"><span class="error">*</span>
         <br><br>
-        <label for="email">Email: </label><input type="email" id="email" name="email"><span class="error">*</span>
-        <br><br>
         <label for="oldpass">Old password: </label><input type="password" id="oldpass" name="oldpass"><span class="error">*</span>
         <br><br>
         <label for="pass">New password: </label><input type="password" id="newpass" name="newpass"><span class="error">*</span>
@@ -64,11 +62,10 @@
       // define variables and set to empty values
       function validate() {
         var a = document.getElementById("username").value;
-        var b = document.getElementById("email").value;
         var c = document.getElementById("oldpass").value;
         var d = document.getElementById("newpass").value;
         var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
-        if (a == null || a == "" || b == null || b == "" || c == null || c == "" || d == null || d == "") {
+        if (a == null || a == "" || c == null || c == "" || d == null || d == "") {
           //alert("Please Fill All Required Fields");
           return false;
         } else if(reg.test(a)) {

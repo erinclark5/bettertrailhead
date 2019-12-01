@@ -21,6 +21,7 @@ button:hover{
     <p>Return to Login or Register</p>
     <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Login Again!</button>
     <button onclick="window.location.href = 'register.php';" style="margin-botton:5px;">Register Here!</button>
+    <br><br>
   </div>
 </body>
 </html>

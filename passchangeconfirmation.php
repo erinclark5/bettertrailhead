@@ -33,23 +33,24 @@
   }
   $username = $_POST["username"];
   $oldpass = $_POST["oldpass"];
-  $email = $_POST["email"];
   $newpass = $_POST["newpass"];
 
-  $sql = "SELECT uname, password, email FROM users WHERE uname = '$username' AND password = '$oldpass' AND email = '$email'";
+  $sql = "SELECT uname, password FROM users WHERE uname = '$username' AND password = '$oldpass'";
   $result = $conn->query($sql);
   echo $conn->error;
   if($result->num_rows > 0){
     $sql = "UPDATE users SET password = '$newpass' WHERE uname = '$username'";
     $result = $conn->query($sql);
     echo $conn->error;
-    ?><h2>Your password has been changed!</h2> <?php
+    ?><h2>Your password has been changed!</h2><button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+     <?php
   } else{
-    ?><h2>There is not an account associated with the information you entered.</h2> <?php
+    ?><h2>There is not an account associated with the information you entered.</h2><button onclick="window.location.href = 'changepass.php';" style="margin-botton:5px;">Try Again</button>
+    <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+     <?php
   }
   $conn->close();
   ?>
-  <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
   <br><br>
   </div>
   <footer style="padding-top:10px">
@@ -59,7 +60,7 @@
     <img class="validation" src="images/css.png" alt="css validation" style="height:2em">
     <p class="validation">WCAG:</p>
     <img class="validation" src="images/wcag2AAA.png" alt="wcag validation" style="height:2em">
-    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("registerconfirmation.php"));?>
+    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("passchanhgeconfirmation.php"));?>
   </footer>
 </body>
 </html>

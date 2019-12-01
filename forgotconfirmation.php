@@ -34,18 +34,42 @@
   $username = $_POST["username"];
   $email = $_POST["email"];
 
-  $sql = "SELECT uname, email FROM users WHERE uname = '$username' AND email = '$email'";
-  $result = $conn->query($sql);
+  $sql = "SELECT id FROM users WHERE uname = (?)";
+  $stmt = $conn->prepare($sql);
   echo $conn->error;
-  if($result->num_rows > 0){
-    
+  $stmt->bind_param("s", $username);
+  $stmt->execute();
+  $result=$stmt->get_result();
+  $row = $result->fetch_assoc();
+  $id = $row['id'];
+
+
+  // Check if user is an admin
+  $adRes=$conn->query("SELECT alias FROM admin WHERE id = '$id'");
+  if($adRes->num_rows > 0){
+    echo "<h2>For your safety, you cannot reset admin accounts.<br>
+    Please contact the System Administrator at trailhead@mines.edu to reset your account.</h2>";
   } else{
-    ?><h2>There is not an account associated with the information you entered.</h2> <?php
+    if(empty($email)){
+      echo "<h2>Please enter your email!</h2>";
+    }else{
+      $sql = "SELECT id, email FROM students WHERE id = '$id' AND email = '$email'";
+      $result = $conn->query($sql);
+      echo $conn->error;
+      if($result->num_rows > 0){
+        // We send the email here
+        echo "<h2>Reset email sent!<h2>";
+      } else{
+        ?><h2>There is not an account associated with the information you entered.</h2> <?php
+      }
+    }
   }
+
+
   $conn->close();
   ?>
+  <button onclick="window.location.href = 'forgotpassword.php';" style="margin-botton:5px;">Try Again</button>
   <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
-  <br><br>
   </div>
   <footer style="padding-top:10px">
     <p class="validation">HTML:</p>

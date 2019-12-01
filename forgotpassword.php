@@ -41,13 +41,13 @@
       date_default_timezone_set("America/Denver");?>
 
     <div id="login">
-    <h1>Please fill in the fields below:</h1>
+    <h1>Forgot Password: <br>Please fill in the fields below</h1>
     <p><span class="error">* required field</span></p>
-    <form method="post" action= "passchangeconfirmation.php" onsubmit="return validate()">
+    <form method="post" action= "forgotconfirmation.php" onsubmit="return validate()">
       <fieldset>
         <label for="username">Username: </label> <input type="text" id="username" name="username"><span class="error">*</span>
         <br><br>
-        <label for="email">Email: </label><input type="email" id="email" name="email"><span class="error">*</span>
+        <label for="email">Email: </label><input type="email" id="email" name="email">
         <br><br>
       </fieldset>
       <br>
@@ -63,8 +63,11 @@
         var a = document.getElementById("username").value;
         var b = document.getElementById("email").value;
         var reg = /[ !@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]/;
-        if (a == null || a == "" || b == null || b == "") {
+        if (a == null || a == "") {
           //alert("Please Fill All Required Fields");
+          return false;
+        } else if((b!==null || b!=="") && !emailValid(c)){
+          alert('Not a valid email.');
           return false;
         } else if(reg.test(a)) {
             //alert('Input is not alphanumeric');
@@ -72,6 +75,9 @@
         } else {
           return true;
         }
+      }
+      function emailValid(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
       }
     </script>
 </article>

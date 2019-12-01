@@ -48,6 +48,15 @@
   </script>
 </head>
 <body style="text-align:center">
+  <div class="info" id="#top">
+  <hr>
+  <header>
+    <h1 class="title">
+    Colorado School of Mines - Trailhead</h1>
+  </header>
+  <hr>
+  </div>
+  <br>
   <?php
   	error_reporting(E_ALL);
     session_start();
@@ -126,10 +135,6 @@
 	<button type="button" onclick="location.href='logout.php'" style="margin-botton:5px;">Logout</button>
 	<br><br>
 	</div>
-	<br />
-	<br />
-	<br />
-	<br />
 
 
 	<table id="scheduleTable" style="width:100%">
