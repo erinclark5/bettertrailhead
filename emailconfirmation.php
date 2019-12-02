@@ -91,14 +91,23 @@ $emailTo = $email;
 $mail = new PHPMailer;
 $mail->isSMTP();
 $mail->Host = 'mail.clanclark.net';
-$mail->Port = 25;
-$mail->SMTPSecure = 'tls';
 $mail->SMTPAuth = true;
 $mail->Username = "erinl@clanclark.net";
 $mail->Password = "mypassword";
-$mail->setFrom('erinl@clanclark.net');
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
+
+$mail->setFrom('erinl@clanclark.net', "bettertrailhead");
+$mail->addReplyTo('erinl@clanclark.net', "bettertrailhead");
 $mail->addAddress($email);
-$mail->Body = "localhost:8080/bettertrailhead/registerconfirmation.php?passkey=$code";
+
+$mail->isHTML(true);
+
+$bodyContent = "<a href=localhost:8080/bettertrailhead/registerconfirmation.php?passkey=" . "'$code'" . "</a>";
+
+$mail->Subject = 'Confirmation from the team at bettertrailhead';
+$mail->Body = $bodyContent;
+
 if(!$mail->send()){
     echo "Mailer Error: " . $mail->ErrorInfo;
 }else{
