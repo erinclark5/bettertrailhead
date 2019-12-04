@@ -128,7 +128,7 @@ CREATE TABLE `temp` (
   `email` text NOT NULL,
   `stat` text NOT NULL,
   `first` text NOT NULL,
-  `last` text NOT NULL,
+  `last` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
