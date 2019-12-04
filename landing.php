@@ -184,6 +184,7 @@
 
 			xmlhttp.open("GET","addlanding.php?q="+className+"&r="+userInfo,true);
 			xmlhttp.send();
+			window.location.reload();
 		}
 
 		function updateDelete() {
@@ -202,6 +203,7 @@
 			var userInfo = '<?php echo $userID; ?>';
 			xmlhttp.open("GET","deletelanding.php?q="+className+"&r="+userInfo,true);
 			xmlhttp.send();
+			window.location.reload();
 		}
 
 	</script>
