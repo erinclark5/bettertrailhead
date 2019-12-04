@@ -57,10 +57,10 @@
   }
 
 
-  $sql = "INSERT INTO temp (code, uname, password, id, email, stat) VALUES (?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO temp (code, uname, password, id, email, stat, first, last) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
   echo $conn->error;
-  $stmt->bind_param("sssiss", $code, $username, $password, $id, $email, $student);
+  $stmt->bind_param("sssissss", $code, $username, $password, $id, $email, $student, $firstname,$lastname);
   $stmt->execute();
 
 //   $to = $email;
@@ -71,7 +71,7 @@
 //   $message.="localhost:8080/bettertrailhead/registerconfirmation.php?passkey=$code";
 
 //   $sentmail = mail($to,$subject,$message,$header);
-  
+
 //   // if your email succesfully sent
 //   if($sentmail){
 //     echo "Your Confirmation link Has Been Sent To Your Email Address.";
@@ -111,7 +111,7 @@ $mail->Body = $bodyContent;
 if(!$mail->send()){
     echo "Mailer Error: " . $mail->ErrorInfo;
 }else{
-    echo "Message sent!";
+    echo "<br><br>Message sent!<br><br>";
 }
 
 

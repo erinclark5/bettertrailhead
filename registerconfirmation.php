@@ -38,11 +38,11 @@
   // while(mysqli_more_results($conn)){ mysqli_next_result($conn); }
   // echo $conn->error;
   // ini_set('display_errors', 1);
-  
+
   $passkey = $_GET["passkey"];
   $sql = "SELECT * FROM temp WHERE code='$passkey'";
   $result = $conn->query($sql);
-  if($result){
+  if($result->num_rows>0){
     //$count=$result->num_rows();
     //if($count == 1){
       $row = $result->fetch_assoc();
@@ -51,13 +51,15 @@
       $id = $row["id"];
       $email = $row["email"];
       $student = $row["stat"];
+      $firstname = $row["first"];
+      $lastname = $row["last"];
     //}
     $sql = "INSERT INTO users (uname, password, id, email) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     echo $conn->error;
     $stmt->bind_param("ssis", $username, $password, $id, $email);
     $stmt->execute();
-
+    echo '<h2>You have been registered!</h2>';
     if($student == "true"){
       $sql = "INSERT INTO students (id, first, last, email) VALUES (?, ?, ?, ?)";
       $stmt2 = $conn->prepare($sql);
@@ -79,7 +81,7 @@
   $result = $conn->query($sql);
   $conn->close();
   ?>
-  <h2>You have been registered!</h2>
+  <br><br>
   <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
   <br><br>
   </div>

@@ -55,6 +55,8 @@
       <input type="reset" name="reset" value="Reset">
     </form>
     </div>
+    <button onclick="window.location.href = 'login.php';" style="margin-botton:5px;">Back to Login</button>
+    <br><br>
     </article>
     </div>
     <script>
