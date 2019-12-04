@@ -42,6 +42,16 @@
   $result=$stmt->get_result();
   $row = $result->fetch_assoc();
   $id = $row['id'];
+  
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+
+  require 'PHPMailer/src/Exception.php';
+  require 'PHPMailer/src/PHPMailer.php';
+  require 'PHPMailer/src/SMTP.php';
+  
+   $newPass=rand(1000,9999);
+
 
 
   // Check if user is an admin
@@ -53,13 +63,43 @@
     if(empty($email)){
       echo "<h2>Please enter your email!</h2>";
     }else{
-      $sql = "SELECT id, email FROM students WHERE id = '$id' AND email = '$email'";
-      $result = $conn->query($sql);
-      echo $conn->error;
-      if($result->num_rows > 0){
-        // We send the email here
-        echo "<h2>Reset email sent!<h2>";
-      } else{
+
+      if($id != ""){
+		  
+		$conn->query("UPDATE users SET password = '$newPass' WHERE id = '$id'");
+		
+		// sending email  
+        
+		$emailTo = $email;
+
+		$mail = new PHPMailer;
+		$mail->isSMTP();
+		$mail->Host = 'mail.clanclark.net';
+		$mail->SMTPAuth = true;
+		$mail->Username = "erinl@clanclark.net";
+		$mail->Password = "mypassword";
+		$mail->SMTPSecure = 'tls';
+		$mail->Port = 587;
+
+		$mail->setFrom('erinl@clanclark.net', "BetterTrailhead");
+		$mail->addReplyTo('erinl@clanclark.net', "bettertrailhead");
+		$mail->addAddress($email);
+
+		$mail->isHTML(true);
+
+		$bodyContent = "<p>Hello! Your temporary password is: $newPass";
+		$bodyContent = $bodyContent . "<br />Please change your password once you have regained access to your account</p>";
+
+		$mail->Subject = 'Confirmation from the team at bettertrailhead';
+		$mail->Body = $bodyContent;
+
+		if(!$mail->send()){
+			echo "Mailer Error: " . $mail->ErrorInfo;
+		}else{
+			echo "<h2>Reset email sent!<h2>";
+		}
+		
+	  } else{
         ?><h2>There is not an account associated with the information you entered.</h2> <?php
       }
     }
@@ -78,7 +118,7 @@
     <img class="validation" src="images/css.png" alt="css validation" style="height:2em">
     <p class="validation">WCAG:</p>
     <img class="validation" src="images/wcag2AAA.png" alt="wcag validation" style="height:2em">
-    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("registerconfirmation.php"));?>
+    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("forgotconfirmation.php"));?>
   </footer>
 </body>
 </html>

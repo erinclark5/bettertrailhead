@@ -60,7 +60,7 @@
     <img class="validation" src="images/css.png" alt="css validation" style="height:2em">
     <p class="validation">WCAG:</p>
     <img class="validation" src="images/wcag2AAA.png" alt="wcag validation" style="height:2em">
-    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("passchanhgeconfirmation.php"));?>
+    <p>This file was last updated on <?php date_default_timezone_set("America/Denver");echo date('M/d/Y h:i',filemtime("passchangeconfirmation.php"));?>
   </footer>
 </body>
 </html>

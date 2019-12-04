@@ -103,7 +103,7 @@ $mail->addAddress($email);
 
 $mail->isHTML(true);
 
-$bodyContent = "<a href=localhost:8080/bettertrailhead/registerconfirmation.php?passkey=" . "'$code'" . "</a>";
+$bodyContent = "<p>localhost/bettertrailhead/registerconfirmation.php?passkey=$code</p>";
 
 $mail->Subject = 'Confirmation from the team at bettertrailhead';
 $mail->Body = $bodyContent;

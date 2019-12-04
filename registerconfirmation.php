@@ -43,15 +43,15 @@
   $sql = "SELECT * FROM temp WHERE code='$passkey'";
   $result = $conn->query($sql);
   if($result){
-    $count=$result->num_rows();
-    if($count == 1){
+    //$count=$result->num_rows();
+    //if($count == 1){
       $row = $result->fetch_assoc();
       $username = $row["uname"];
       $password = $row["password"];
       $id = $row["id"];
       $email = $row["email"];
       $student = $row["stat"];
-    }
+    //}
     $sql = "INSERT INTO users (uname, password, id, email) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     echo $conn->error;
@@ -75,7 +75,7 @@
   } else {
     echo "Wrong confirmation code";
   }
-  $sql = "DELETE FROM temp WHERE code = '$code'";
+  $sql = "DELETE FROM temp WHERE code = '$passkey'";
   $result = $conn->query($sql);
   $conn->close();
   ?>
